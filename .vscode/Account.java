@@ -1,13 +1,16 @@
-// Base class
+// Base clase
 // Abstract
-
 public abstract class Account {
 
+    // account number
     private int accountNumber;
+
+    // Balance
     protected double balance;
 
-    // default constructor
+    // Default constructor
     public Account() {
+
     }
 
     public Account(int accountNumber) {
@@ -15,25 +18,32 @@ public abstract class Account {
         balance = 0;
     }
 
-    // Getter method
+    // Getter methods
     public double getBalance() {
         return this.balance;
     }
 
-    // abstract
-    /**
-     * function to deposit funds as long as the amount parameter is>0
-     */
+    public int getAccountNumber() {
+        return this.accountNumber;
+    }
 
+    // Abstract
+    /**
+     * Function to deposit funds into the account as long as
+     * the amount parameter is > 0
+     * 
+     * Apply Transaction fee for the CheckingAccount
+     * 
+     * @param amount value to be deposited
+     */
     public abstract void deposit(double amount);
 
     /**
-     * @param
-     * function        to withdraw funds from the Account as long as the amount to
-     *                 withdraw must be > 0
-     *                 must be <= 0
+     * Function to withdraw funds from the Account as long as
+     * 1. Amount to withdraw must be > 0
+     * 2. Amount to withdraw must be <= balance
+     * 
+     * @param amount value to be withdrawn
      */
-
     public abstract void withdraw(double amount);
-
 }

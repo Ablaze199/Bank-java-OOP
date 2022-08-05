@@ -1,8 +1,5 @@
-import java.security.Key;
-import java.sql.SQLOutput;
-import java.util.Scanner;
 
-import javax.sound.sampled.SourceDataLine;
+import java.util.Scanner;
 
 public class AccountDriver {
     // Entry point of program
@@ -59,9 +56,33 @@ public class AccountDriver {
         // Search for Account
         int index = searchAccount(accounts, count, accountNumber);
 
-        // amount
-        System.out.print("Please enter Deposit Amount: ");
-        double amount = Keyboard.nextDouble();
+        if (index >= 0) {
+            // amount
+            System.out.print("Please enter withdraw Amount: ");
+            double amount = Keyboard.nextDouble();
+            accounts[index].deposit(amount);
+        } else {
+            System.out.println("No account exixt with AccountNumber: " + accountNumber);
+        }
+
+    }
+
+    public void doWithdraw(Account accounts[], int count, Scanner keyboard) {
+
+        System.out.print("\nPlease enter account number: ");
+        int accountNumber = keyboard.nextInt();
+
+        // Search for Account
+        int index = searchAccount(accounts, count, accountNumber);
+
+        if (index >= 0) {
+            // amount
+            System.out.print("Please enter Deposit Amount: ");
+            double amount = keyboard.nextDouble();
+            accounts[index].deposit(amount);
+        } else {
+            System.out.println("No account exixt with AccountNumber: " + accountNumber);
+        }
 
     }
 
