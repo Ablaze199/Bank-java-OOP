@@ -8,7 +8,27 @@ public class AccountDriver {
         Scanner keyboard = new Scanner(System.in);
 
         // create an array of Acounts
-        Account account[] = new Account[10];
+        Account accounts[] = new Account[10];
+        int numAccounts = 0;
+
+        int choice;
+        do {
+            choice = menu(keyboard);
+            System.out.println();
+            if (choice == 1) {
+                accounts[numAccounts] = createAccount(keyboard);
+            } else if (choice == 2) {
+                doDeposit(accounts, numAccounts, keyboard);
+            } else if (choice == 3) {
+                doWithdraw(accounts, numAccounts, keyboard);
+            } else if (choice == 4) {
+                applyInterest(accounts, numAccounts, keyboard);
+            } else {
+                System.out.println("Au revior");
+            }
+
+            System.out.println();
+        } while (choice != 5);
 
     }
 
@@ -48,7 +68,7 @@ public class AccountDriver {
      * @param doDeposit
      * @return
      */
-    public void doDeposit(Account accounts[], int count, Scanner Keyboard) {
+    public static void doDeposit(Account accounts[], int count, Scanner Keyboard) {
         // Get the account Number
         System.out.print("\nPlease enter account number: ");
         int accountNumber = Keyboard.nextInt();
@@ -67,7 +87,7 @@ public class AccountDriver {
 
     }
 
-    public void doWithdraw(Account accounts[], int count, Scanner keyboard) {
+    public static void doWithdraw(Account accounts[], int count, Scanner keyboard) {
 
         System.out.print("\nPlease enter account number: ");
         int accountNumber = keyboard.nextInt();
@@ -77,13 +97,29 @@ public class AccountDriver {
 
         if (index >= 0) {
             // amount
-            System.out.print("Please enter Deposit Amount: ");
+            System.out.print("Please enter Withdraw Amount: ");
             double amount = keyboard.nextDouble();
-            accounts[index].deposit(amount);
+            accounts[index].withdraw(amount);
         } else {
             System.out.println("No account exixt with AccountNumber: " + accountNumber);
         }
 
+    }
+
+    public static void applyInterest(Account accounts[], int count, Scanner keyboard) {
+        System.out.print("\nPlease enter account number: ");
+        int accountNumber = keyboard.nextInt();
+
+        // Search for Account
+        int index = searchAccount(accounts, count, accountNumber);
+        // must be instance of savins account
+        if (index >= 0) {
+            if (accounts[index] instanceof SavingsAccount)
+                (((SavingsAccount) accounts[index])).applyInterest();
+
+        } else {
+            System.out.println("No account exixt with AccountNumber: " + accountNumber);
+        }
     }
 
     /**
@@ -120,13 +156,14 @@ public class AccountDriver {
         System.out.println("1. Create NEW Account");
         System.out.println("2. Deposit funds");
         System.out.println("3. Withdraw funds");
-        System.out.println("4.Quit");
+        System.out.println("4. Apply Interest");
+        System.out.println("5.Quit");
 
         int choice;
         do {
             System.out.println("Enter choice: ");
             choice = keyboard.nextInt();
-        } while (choice < 1 || choice > 4);
+        } while (choice < 1 || choice > 5);
         return choice;
     }
 
